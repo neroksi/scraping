@@ -347,12 +347,21 @@ summary {
 <!-- code folding -->
 
 
-
-
+<link rel="stylesheet" href="style.css"></link>
 </head>
 
 <body>
-
+<header>
+<nav id="scraping-navbar">
+<ul>
+  <li><a href="#" class="navbar-brand">Scraping</a></li>
+  <li><a href="chap1.html" class="active">Chap1</a></li>
+  <li><a href="chap1.html">Chap2</a></li>
+  <li><a href="chap1.html">Chap3</a></li>
+</ul>
+</nav>
+</header>
+<main role="main">
 
 <div class="container-fluid main-container">
 
@@ -434,6 +443,6 @@ $(document).ready(function () {
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>
-
+</main>
 </body>
 </html>
