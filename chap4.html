@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Kossi" />
+
+<meta name="date" content="2020-11-01" />
+
+<title>Application 1</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Scraping</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="chap1.html">Chap1</a>
+</li>
+<li>
+  <a href="chap2.html">Chap2</a>
+</li>
+<li>
+  <a href="chap3.html">Chap3</a>
+</li>
+<li>
+  <a href="chap4.html">Chap4</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Application 1</h1>
+<h4 class="author">Kossi</h4>
+<h4 class="date">11/01/2020</h4>
+
+</div>
+
+
+<p><br></p>
+<div id="extraction-des-principaux-taux-de-change-sur-msn" class="section level1">
+<h1>Extraction des principaux taux de change sur MSN</h1>
+<p>Dans cette partie, nous allons mettre en pratique tout ce que nous avons déjà appris dans ce cours. En mobilisant les différents points déjà abordés, nous irons récupérer des données financières en temps réel sur <strong>MSN</strong>.</p>
+<br><br>
+<div class="alert alert-warning">
+<pre><code> MSN est un portail de services web détenu par Microsoft.</code></pre>
+</div>
+<p>Ouvrons la page des taux de change <strong>MSN</strong> avec la librairie <strong>requests</strong> :</p>
+<pre class="python"><code>import requests
+from bs4 import BeautifulSoup
+msn = requests.get(&quot;https://www.msn.com/en-us/money/markets/currencies&quot;)
+print( &quot;code d&#39;état :&quot;, msn.status_code)</code></pre>
+<pre><code>## code d&#39;état : 200</code></pre>
+<pre class="python"><code>soup = BeautifulSoup(msn.text)</code></pre>
+<p><strong>Q1</strong> Quelle est la plus petite classe qui englobe notre table d’intérêt ? Appelons cette classe <code>currency_class</code>. Modifiez le code ci-dessous pour ne sélectionner que la classe <code>currency_class</code>.</p>
+<pre class="python"><code># N&#39;oubliez pas de définir currency_class
+cur = soup.find( class_ =  currency_class) # Retenez cette syntaxe, elle permet d&#39;extraire une classe quelconque
+if cur and len(cur) :
+  print(&quot;Bravo: il semblerait que j&#39;ai trouvé la classe!&quot;)
+else:
+  print(&quot;Je n&#39;ai toujours pas trouvé la classe mère&quot;)</code></pre>
+<pre><code>## Bravo: il semblerait que j&#39;ai trouvé la classe!</code></pre>
+<br>
+<div class="alert alert-warning">
+<pre><code> Pour trouver la classe `currency_class`, vous pouvez vous servir de votre navigateur Web en faisant &#39;CTRL + I&#39; ou &#39;Click droit + Inspecter cette page&#39;</code></pre>
+</div>
+<p><br></p>
+<p><strong>Q2</strong> Quelle est la classe qui représente l’en-tête de la table ? Notons-la <code>thead_class</code>. Alors l’en-tête s’extrait de la façon suivante :</p>
+<pre class="python"><code># N&#39;oubliez pas de définir thead_class
+header = cur.find(class_ = thead_class)
+headers = header.find_all(class_ = &quot;mctblheading&quot;) # Avez-vous pu retrouver la classe `mctblheading`  de vous mêmes ?
+header_values = []
+for header in headers :
+    header_values.append(header.find(&quot;p&quot;).attrs[&quot;title&quot;])
+print(header_values)</code></pre>
+<pre><code>## [&#39;Major Currencies&#39;, &#39;Price&#39;, &#39;Change&#39;, &#39;Change%&#39;, &#39;52 Week High&#39;, &#39;52 Week Low&#39;]</code></pre>
+<p><br></p>
+<p><strong>Q3</strong> Quelle est la classe qui englobe toutes les lignes de la table ? Elle sera notée <code>trows_class</code>. Pouvez-vous identifier la classe qui caractérise une ligne dans la table ? Notons cette classe `trow_class’.</p>
+<pre class="python"><code>rows_container = cur.find(class_ = trows_class)
+rows = rows_container.find_all(class_ = &quot;mcrow&quot;)
+row = rows[0]
+print(row)</code></pre>
+<pre><code>## &lt;div class=&quot;mcrow&quot;&gt;
+## &lt;span aria-hidden=&quot;True&quot; class=&quot;flagcol&quot;&gt;&lt;span class=&quot;cntryflag&quot; id=&quot;EUR&quot;&gt; &lt;/span&gt;&lt;/span&gt;
+## &lt;div class=&quot;cntrycnvrsn&quot;&gt;
+## &lt;span class=&quot;cntrycol&quot;&gt;&lt;p class=&quot;truncated-string&quot; title=&quot;Euro&quot;&gt;Euro&lt;/p&gt;&lt;/span&gt;
+## &lt;span class=&quot;cnvrsncol&quot;&gt;&lt;p class=&quot;truncated-string&quot; title=&quot;USD/EUR&quot;&gt;USD/EUR&lt;/p&gt;&lt;/span&gt;
+## &lt;/div&gt;
+## &lt;span class=&quot;pricecol&quot;&gt;&lt;p aria-label=&quot;Price 0.8990&quot; class=&quot;truncated-string&quot; title=&quot;0.8990&quot;&gt;0.8990&lt;/p&gt;&lt;/span&gt;
+## &lt;div class=&quot;chcpclub&quot;&gt;
+## &lt;span class=&quot;chngcol chng-value unchanged&quot;&gt;&lt;p aria-label=&quot;Change 0.0000&quot; class=&quot;truncated-string&quot; title=&quot;0.0000&quot;&gt;0.0000&lt;/p&gt;&lt;/span&gt;
+## &lt;span class=&quot;chpcol chp-value unchanged&quot;&gt;&lt;p aria-label=&quot;Change% 0.0000%&quot; class=&quot;truncated-string&quot; title=&quot;0.0000%&quot;&gt;0.0000%&lt;/p&gt;&lt;/span&gt;
+## &lt;/div&gt;
+## &lt;span class=&quot;rng52wkcol&quot;&gt;&lt;p aria-label=&quot;52 Week High 0.9191&quot; class=&quot;truncated-string&quot; title=&quot;0.9191&quot;&gt;0.9191&lt;/p&gt;&lt;/span&gt;
+## &lt;span class=&quot;rng52wkcol&quot;&gt;&lt;p aria-label=&quot;52 Week Low 0.8642&quot; class=&quot;truncated-string&quot; title=&quot;0.8642&quot;&gt;0.8642&lt;/p&gt;&lt;/span&gt;
+## &lt;/div&gt;</code></pre>
+<p><br></p>
+<p><strong>Q4</strong> En vous servant de la variable <strong>row</strong> définie dans la question précédente, trouvez les classes qui représentent :</p>
+<ul>
+<li>La monnaie de base</li>
+<li>La paire de monnaies de change</li>
+<li>Le cours/prix de change</li>
+<li>La variation absolue du cours</li>
+<li>La variation en pourcentage du cours</li>
+</ul>
+<p><strong>Extraire chacun des champs sus-mentionnés</strong>.</p>
+<p>Quelle est la classe commune au maximum et minimum annuel des cours ? Pouvez-vous dire <strong>l’attribut HTML</strong> qui différencie le cours minimum du cours maximum ? Extraire les 2 cours. Extrayez les 2 cours. <br></p>
+<p><strong>Q5</strong> En vous servant de la question <strong>Q4</strong>, écrire une fonction qui prend en entrée une ligne de la table et extrait ses champs. Utilisez cette fonction pour extraire toutes les lignes de la table dans une liste de dictionnaire. <br></p>
+<p><strong>Q6</strong> En utilisant la librairie <strong>pandas</strong>, convertissez la liste de la question <strong>5</strong> en un <strong>dataframe</strong> (n’hésitze pas à vous inspirer de l’en-tête de la table pour définir le nom de vos colonnes).</p>
+<p>Vous devriez obtenir une table de la forme :</p>
+<pre><code>##             currency    pairs     price  ...  pchange rng52wkcol_high rng52wkcol_low
+## 0               Euro  USD/EUR    0.8990  ...  0.0000%          0.9191         0.8642
+## 1       Japanese Yen  USD/JPY  109.4600  ...  0.0000%        112.3900       104.4400
+## 2      British Pound  GBP/USD    1.3059  ...  0.0000%          1.3514         1.1957
+## 3    Canadian Dollar  USD/CAD    1.3050  ...  0.0000%          1.3564         1.2947
+## 4  Australian Dollar  USD/AUD    1.4482  ...  0.0000%          1.4988         1.3702
+## 
+## [5 rows x 7 columns]</code></pre>
+<p><br></p>
+<p><strong>Q7</strong> Au vu de nos données, quel est le taux de conversion le plus élevé ? Pouvez-vous visualiser ces taux à l’aide d’un diagramme en bâtons (barplot) ?</p>
+<p><strong>BRAVO, vous avez réussi à scraper votre premier page Web !</strong>.</p>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
