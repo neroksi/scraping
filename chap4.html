@@ -353,10 +353,10 @@ print(row)</code></pre>
 ## &lt;span class=&quot;cntrycol&quot;&gt;&lt;p class=&quot;truncated-string&quot; title=&quot;Euro&quot;&gt;Euro&lt;/p&gt;&lt;/span&gt;
 ## &lt;span class=&quot;cnvrsncol&quot;&gt;&lt;p class=&quot;truncated-string&quot; title=&quot;USD/EUR&quot;&gt;USD/EUR&lt;/p&gt;&lt;/span&gt;
 ## &lt;/div&gt;
-## &lt;span class=&quot;pricecol&quot;&gt;&lt;p aria-label=&quot;Price 0.8990&quot; class=&quot;truncated-string&quot; title=&quot;0.8990&quot;&gt;0.8990&lt;/p&gt;&lt;/span&gt;
+## &lt;span class=&quot;pricecol&quot;&gt;&lt;p aria-label=&quot;Price 0.8991&quot; class=&quot;truncated-string&quot; title=&quot;0.8991&quot;&gt;0.8991&lt;/p&gt;&lt;/span&gt;
 ## &lt;div class=&quot;chcpclub&quot;&gt;
-## &lt;span class=&quot;chngcol chng-value unchanged&quot;&gt;&lt;p aria-label=&quot;Change 0.0000&quot; class=&quot;truncated-string&quot; title=&quot;0.0000&quot;&gt;0.0000&lt;/p&gt;&lt;/span&gt;
-## &lt;span class=&quot;chpcol chp-value unchanged&quot;&gt;&lt;p aria-label=&quot;Change% 0.0000%&quot; class=&quot;truncated-string&quot; title=&quot;0.0000%&quot;&gt;0.0000%&lt;/p&gt;&lt;/span&gt;
+## &lt;span class=&quot;chngcol chng-value decrease&quot;&gt;&lt;p aria-label=&quot;Change -0.0003&quot; class=&quot;truncated-string&quot; title=&quot;-0.0003&quot;&gt;-0.0003&lt;/p&gt;&lt;/span&gt;
+## &lt;span class=&quot;chpcol chp-value decrease&quot;&gt;&lt;p aria-label=&quot;Change% -0.0334%&quot; class=&quot;truncated-string&quot; title=&quot;-0.0334%&quot;&gt;-0.0334%&lt;/p&gt;&lt;/span&gt;
 ## &lt;/div&gt;
 ## &lt;span class=&quot;rng52wkcol&quot;&gt;&lt;p aria-label=&quot;52 Week High 0.9191&quot; class=&quot;truncated-string&quot; title=&quot;0.9191&quot;&gt;0.9191&lt;/p&gt;&lt;/span&gt;
 ## &lt;span class=&quot;rng52wkcol&quot;&gt;&lt;p aria-label=&quot;52 Week Low 0.8642&quot; class=&quot;truncated-string&quot; title=&quot;0.8642&quot;&gt;0.8642&lt;/p&gt;&lt;/span&gt;
@@ -375,16 +375,17 @@ print(row)</code></pre>
 <p><strong>Q5</strong> En vous servant de la question <strong>Q4</strong>, écrire une fonction qui prend en entrée une ligne de la table et extrait ses champs. Utilisez cette fonction pour extraire toutes les lignes de la table dans une liste de dictionnaire. <br></p>
 <p><strong>Q6</strong> En utilisant la librairie <strong>pandas</strong>, convertissez la liste de la question <strong>5</strong> en un <strong>dataframe</strong> (n’hésitze pas à vous inspirer de l’en-tête de la table pour définir le nom de vos colonnes).</p>
 <p>Vous devriez obtenir une table de la forme :</p>
-<pre><code>##             currency    pairs     price  ...  pchange rng52wkcol_high rng52wkcol_low
-## 0               Euro  USD/EUR    0.8990  ...  0.0000%          0.9191         0.8642
-## 1       Japanese Yen  USD/JPY  109.4600  ...  0.0000%        112.3900       104.4400
-## 2      British Pound  GBP/USD    1.3059  ...  0.0000%          1.3514         1.1957
-## 3    Canadian Dollar  USD/CAD    1.3050  ...  0.0000%          1.3564         1.2947
-## 4  Australian Dollar  USD/AUD    1.4482  ...  0.0000%          1.4988         1.3702
+<pre><code>##             currency    pairs  ... rng52wkcol_high rng52wkcol_low
+## 0               Euro  USD/EUR  ...          0.9191         0.8642
+## 1       Japanese Yen  USD/JPY  ...        112.3900       104.4400
+## 2      British Pound  GBP/USD  ...          1.3514         1.1957
+## 3    Canadian Dollar  USD/CAD  ...          1.3564         1.2947
+## 4  Australian Dollar  USD/AUD  ...          1.4988         1.3702
 ## 
 ## [5 rows x 7 columns]</code></pre>
 <p><br></p>
-<p><strong>Q7</strong> Au vu de nos données, quel est le taux de conversion le plus élevé ? Pouvez-vous visualiser ces taux à l’aide d’un diagramme en bâtons (barplot) ?</p>
+<p><strong>Q7</strong> Au vu de nos données, quel est le taux de conversion le plus élevé ? Pouvez-vous visualiser ces taux à l’aide d’un diagramme en bâtons (barplot) ? <br></p>
+<p><strong>Q8</strong> Reconstruire la table pandas dela question <strong>7</strong> en n’utilisant cette fois que des <strong>sélecteurs CSS</strong>. <br></p>
 <p><strong>BRAVO, vous avez réussi à scraper votre premier page Web !</strong>.</p>
 </div>
 
