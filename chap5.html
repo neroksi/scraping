@@ -11,9 +11,9 @@
 
 <meta name="author" content="Kossi" />
 
-<meta name="date" content="2020-07-01" />
+<meta name="date" content="2020-11-01" />
 
-<title>Scraping</title>
+<title>Site dynamic</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -297,21 +297,34 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Scraping</h1>
+<h1 class="title toc-ignore">Site dynamic</h1>
 <h4 class="author">Kossi</h4>
-<h4 class="date">07/01/2020</h4>
+<h4 class="date">11/01/2020</h4>
 
 </div>
 
 
-<div id="une-introduction-pas-si-courte-que-ça-au-web-scraping" class="section level1">
-<h1>Une introduction pas si courte que ça au Web Scraping</h1>
-<blockquote>
-<p>Ce cours va vous initier au Web scraping. Derrière cet anglicisme se cache en réalité une pratique assez courante sur le Web : l’extraction de données sur Internet. Moult entreprises vont collecter leurs données sur le Web pour leurs besoins quotidiens. Les entreprises financières vont chercher des côtes à jour, les agents immobiliers vont parcourir les commentaires sur les sites d’annonce pour avoir le feed-back des clients, les sociétés de paris sportifs vont chercher les données à jour sur les joueurs et les équipes…Bref, le besoin en extraction de données sur le Web est partout présent et aujourd’hui plus que jamais ! D’ailleurs, Google, l’un des géants de l’Internet fait partie, lui aussi, des plus grands scrapeurs du Web. Avec ses robots <strong>crawler</strong>, Google parcourt de façon automatisée le Web « entier » dans le but d’indexer son contenu et le mettre à disposition des internautes.</p>
-</blockquote>
-<p>Notons toutefois que le Web scraping se heurte assez souvent aux problématiques de légalité ou de droit d’auteur sur les données et est souvent accusé d’exploitation abusives de contenus. Ainsi, reviendrons-nous dans ce cours sur ces questions évidemment importantes.</p>
-<p>Quoi qu’il en soit, le Web scraping reste une pratique très courante dont vous aurez sûrement besoin dès que vous aurez à récupérer de la donnée sur le Web et que cette dernière ne se présente pas au bon vieux format tabulaire excel.</p>
-<p><br> Ce cours-tutoriel est assuré par <strong>Kossi Neroma</strong>, Data Scientist à la Télévision Française 1 (TF1).</p>
+<div id="page-dynamique-mais-comment-ça" class="section level1">
+<h1>Page dynamique, mais comment ça ?</h1>
+<p>Je vous disais dans le premier chapitre de ce cours que la grande différence entre les pages Web et un document pdf est la dynamicité des premiers. Avec du JavaScript, le rendu d’une page web peut changer à tout moment en fonction des interactions avec l’utilisateur. Par exemple, sur certains sites, vous n’avez qu’un contenu minimal si vous n’êtes pas authentifié. Et même si vous êtes authentifié, selon les boutons que vous cliquez et selon vos déplacements de souris, le rendu de la page peut changer. Tous ses aspects rendent le scraping beaucoup plus compliqués. Pourquoi ? Dans l’application de tout à l’heure nous avons téléchargé le code source de la page et nous avons extraits les données qui nous intéressent. Eh bien, ce schéma de travail n’est plus utilisable du moment où le code source ne contient que quelques scripts (sans données) qui vont se charger d’aller chercher les données et les afficher selon nos interactions avec la page. Pour obliger le serveur à vous montrer les données, il faut exécuter le javascript de la page et pour ce faire il faut se doter d’un outil bien adapté. Peut importe l’outil, la nécessité d’activer du javascript sur une page ralenti le processus de <strong>scraping</strong>. Mais pour des applications de taille raisonnable, cette perte de rapidité ne constituera pas un vrai frein au projet de récupération de données. Autrement, il va falloir identifier soi même et n’activer que les javascripts les plus ‘intéressants’. Il est aussi possible de régarder directement les requêtes envoyées par le navigateur et reconstituer soi même le procédure complète requise pour récupérer de la donnée de la page d’intérêt.</p>
+</div>
+<div id="authentification" class="section level1">
+<h1>Authentification</h1>
+<p>Les sites Web mettent généralement en place des politiques d’authentification de leurs utilisateurs. Plusieurs protcoles d’authentification sont accessbiles sur Internet :</p>
+</div>
+<div id="cookies" class="section level1">
+<h1>Cookies</h1>
+<p><strong>Un cookie</strong> est un petit fichier texte contentant des paires de <strong>clé-valuer</strong>. Ces <strong>clés-valeurs</strong> permettent aux sites de fournier des services personnalisés. En pyhton il est possible d’ajouter des cookies à sa requête HTTP.</p>
+</div>
+<div id="proxy" class="section level1">
+<h1>Proxy</h1>
+</div>
+<div id="actionsévènements-javascripts" class="section level1">
+<h1>Actions/évènements javascripts</h1>
+</div>
+<div id="formulaire" class="section level1">
+<h1>Formulaire</h1>
+<p>Sur le net, les sites récupèrent souvent les données de leurs utilisateurs grâce aux formulaires. Le conetenu de la page peuvent changer seon les informations renseignées dans le formulaire. Et des fois la page peut requérir ces données avant de vous fournir ses services. Il est donc important de savoir comment remplir ces formulaires de façon autimatisée.</p>
 </div>
 
 
