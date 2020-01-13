@@ -1,0 +1,16 @@
+,flag,cur_name1,cur_name2,price,chg_absolute,chg_perc
+0,EUR,Euro,USD/EUR,0.8979,-0.0015,-0.1668%
+1,JPN,Japanese Yen,USD/JPY,109.8900,+0.4300,+0.3928%
+2,GBR,British Pound,GBP/USD,1.2979,-0.0080,-0.6126%
+3,CAN,Canadian Dollar,USD/CAD,1.3050,0.0000,0.0000%
+4,AUS,Australian Dollar,USD/AUD,1.4474,-0.0012,-0.0828%
+5,CHN,Chinese Yuan (RMB),USD/CNY,6.8924,-0.0254,-0.3672%
+6,CHE,Swiss Franc,USD/CHF,0.9697,-0.0026,-0.2674%
+7,HKG,Hong Kong Dollar,USD/HKD,7.7704,+0.0045,+0.0580%
+8,SWE,Swedish Krona ,USD/SEK,9.4737,-0.0253,-0.2663%
+9,KOR,South Korean Won,USD/KRW,"1,156.6100",-1.3600,-0.1174%
+10,RUS,Russian Rouble,USD/RUB,61.2839,+0.2702,+0.4429%
+11,ZAF,South African Rand,USD/ZAR,14.4257,+0.0679,+0.4729%
+12,IND,Indian Rupee,USD/INR,70.7580,-0.1920,-0.2706%
+13,BRA,Brazilian Real,USD/BRL,4.1345,+0.0385,+0.9399%
+14,MEX,Mexican Peso,USD/MXN,18.8280,+0.0470,+0.2503%
