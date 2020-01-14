@@ -285,6 +285,12 @@ $(document).ready(function () {
 <li>
   <a href="app1.html">app1</a>
 </li>
+<li>
+  <a href="chap4.html">chap4</a>
+</li>
+<li>
+  <a href="app2.html">app2</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         
@@ -304,13 +310,17 @@ $(document).ready(function () {
 </div>
 
 
-<div id="page-dynamique-mais-comment-ça" class="section level1">
-<h1>Page dynamique, mais comment ça ?</h1>
-<p>Je vous disais dans le premier chapitre de ce cours que la grande différence entre les pages Web et un document pdf est la dynamicité des premiers. Avec du JavaScript, le rendu d’une page web peut changer à tout moment en fonction des interactions avec l’utilisateur. Par exemple, sur certains sites, vous n’avez qu’un contenu minimal si vous n’êtes pas authentifié. Et même si vous êtes authentifié, selon les boutons que vous cliquez et selon vos déplacements de souris, le rendu de la page peut changer. Tous ses aspects rendent le scraping beaucoup plus compliqués. Pourquoi ? Dans l’application de tout à l’heure nous avons téléchargé le code source de la page et nous avons extraits les données qui nous intéressent. Eh bien, ce schéma de travail n’est plus utilisable du moment où le code source ne contient que quelques scripts (sans données) qui vont se charger d’aller chercher les données et les afficher selon nos interactions avec la page. Pour obliger le serveur à vous montrer les données, il faut exécuter le javascript de la page et pour ce faire il faut se doter d’un outil bien adapté. Peut importe l’outil, la nécessité d’activer du javascript sur une page ralenti le processus de <strong>scraping</strong>. Mais pour des applications de taille raisonnable, cette perte de rapidité ne constituera pas un vrai frein au projet de récupération de données. Autrement, il va falloir identifier soi même et n’activer que les javascripts les plus ‘intéressants’. Il est aussi possible de régarder directement les requêtes envoyées par le navigateur et reconstituer soi même le procédure complète requise pour récupérer de la donnée de la page d’intérêt.</p>
+<div id="pages-dynamiques-mais-comment-ça" class="section level1">
+<h1>Pages dynamiques, mais comment ça ?</h1>
+<p>Je vous disais dans le premier chapitre de ce cours que la grande différence entre les pages Web et un document pdf est la dynamicité des premiers. Avec du JavaScript, le rendu d’une page web peut changer à tout moment en fonction des interactions avec l’utilisateur. Par exemple, sur certains sites, vous n’avez qu’un contenu minimal si vous n’êtes pas authentifié. Et même si vous êtes authentifié, selon les boutons que vous cliquez et selon vos déplacements de souris, le rendu de la page peut changer. Tous ses aspects rendent le scraping beaucoup plus compliqués. Pourquoi ? Dans l’application de tout à l’heure nous avons téléchargé le code source de la page et nous avons extraits les données qui nous intéressent. Eh bien, ce schéma de travail n’est plus utilisable du moment où le code source ne contient que quelques scripts (sans données) qui vont se charger d’aller chercher les données et les afficher selon nos interactions avec la page. Pour obliger le serveur à vous montrer les données, il faut exécuter le javascript de la page et pour ce faire il faut se doter d’un outil bien adapté. Peut importe l’outil, la nécessité d’activer du javascript sur une page ralenti le processus de <strong>scraping</strong>. Mais pour des applications de taille raisonnable, cette perte de rapidité ne constituera pas un vrai frein au projet de récupération de données. Autrement, il va falloir identifier soi même et n’activer que les javascripts les plus ‘intéressants’. Il est aussi possible de régarder directement les requêtes envoyées par le navigateur et reconstituer soi même la procédure complète requise pour récupérer la donnée de la page d’intérêt.</p>
 </div>
 <div id="authentification" class="section level1">
 <h1>Authentification</h1>
 <p>Les sites Web mettent généralement en place des politiques d’authentification de leurs utilisateurs. Plusieurs protcoles d’authentification sont accessbiles sur Internet :</p>
+<div id="basic-authentication" class="section level2">
+<h2>Basic Authentication</h2>
+<p>La plupart des sites Web acceptent l’authentification <strong>Basic HTTP</strong> qui est la méthode d’authentification la plus simple sur une page Web. <strong>Basic HTTP</strong> est entièrement géré par la libraire <strong>requests</strong> elle même.</p>
+</div>
 </div>
 <div id="cookies" class="section level1">
 <h1>Cookies</h1>
