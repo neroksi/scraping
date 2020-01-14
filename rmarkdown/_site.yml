@@ -1,0 +1,16 @@
+name: "scraping"
+navbar:
+  title: "Scraping"
+  left:
+    - text: "Chap1"
+      href: chap1.html
+    - text: "Chap2"
+      href: chap2.html
+    - text: "Chap3"
+      href: chap3.html
+    - text: "app1"
+      href: app1.html
+    - text: "chap4"
+      href: chap4.html
+    - text: "app2"
+      href: app2.html

@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Kossi" />
+
+<meta name="date" content="2020-07-01" />
+
+<title>API, définition et usage.</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Scraping</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="chap1.html">Chap1</a>
+</li>
+<li>
+  <a href="chap2.html">Chap2</a>
+</li>
+<li>
+  <a href="chap3.html">Chap3</a>
+</li>
+<li>
+  <a href="app1.html">app1</a>
+</li>
+<li>
+  <a href="chap4.html">chap4</a>
+</li>
+<li>
+  <a href="app2.html">app2</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">API, définition et usage.</h1>
+<h4 class="author">Kossi</h4>
+<h4 class="date">07/01/2020</h4>
+
+</div>
+
+
+<p><br><br></p>
+<div id="api-quest-ce-que-cest" class="section level1">
+<h1>API : qu’est-ce que c’est ?</h1>
+<p>Une <strong>API</strong>, ou <a href="https://en.wikipedia.org/wiki/Application_programming_interface">Application Programming Interface</a>, est une interface ou un protocole de communication entre différentes parties d’un programme informatique destiné à simplifier la mise en œuvre et la maintenance des logiciels.</p>
+<p>Une classe d’APIs très utiles est celle des APIs basées sur le Web, dite <strong>API Web</strong>. Une <em>API Web</em> est un serveur que vous pouvez utiliser pour récupérer et envoyer des données à l’aide de code. Les API sont le plus souvent utilisées pour récupérer des données, et ce sera en grande partie l’objet de ce cours.</p>
+<p>Lorsque vous naviguez sur <a href="https://www.google.com/" class="uri">https://www.google.com/</a> , vous envoyez actuellement une requête qui ressemble à :</p>
+<p><strong>Request URL</strong>: <a href="http://google.com/" class="uri">http://google.com/</a><br />
+<strong>Request Method</strong>: GET<br />
+<strong>Status Code</strong>: 200<br />
+<strong>Remote Address</strong>: 172.217.18.<br />
+<strong>Referrer Policy</strong>: no-referrer-when-downgrade<br />
+<strong>Cache-Control</strong>: public, max-age=2592000<br />
+<strong>Content-Length</strong>: 219<br />
+<strong>Content-Type</strong>: text/html; charset=UTF-8<br />
+<strong>Date</strong>: Mon, 06 Jan 2020 03:08:42 GMT<br />
+<strong>Expires</strong>: Wed, 05 Feb 2020 03:08:42 GMT<br />
+<strong>Location</strong>: <a href="http://www.google.com/" class="uri">http://www.google.com/</a></p>
+<p>Pour extraire des données du web, certains sites web offrent une <strong>API</strong> documentée qui peut être requêtée par HTTP.</p>
+<p>HTTP (HyperText Transfer Protocol) est un protocole conçu pour permettre la communication entre clients et serveurs. Lorsque vous surfez sur le Web, votre navigateur Web peut être le client, et une application Web hébergée sur un ordinateur distant peut être le serveur. Il existe différentes méthodes HTTP : <strong>GET</strong>, <strong>POST</strong>, <strong>PUT</strong>, <strong>DELETE</strong> … Les plus utilisées sont <strong>GET</strong> et <strong>POST</strong>. <br><br></p>
+</div>
+<div id="surfer-sur-le-net-sans-son-navigateur-web" class="section level1">
+<h1>Surfer sur le net sans son navigateur web</h1>
+<ul>
+<li>Ouvrir un terminal sur votre OS (Win + “cmd” + Enter ou Ctrl+Alt+T sur Linux)</li>
+<li>Taper: <code>curl -X GET www.google.com</code></li>
+<li>Vous verrez la réponse du serveur sur votre écran. C’est un code HTML brut qui pourrait être visionné par n’importe quel lecteur HTML. <br><br></li>
+</ul>
+</div>
+<div id="envoyer-une-requête-get" class="section level1">
+<h1>Envoyer une requête <code>GET</code></h1>
+<p>Pour faire une requête <code>GET</code>, nous utiliserons le module <strong>requests</strong> et sa fonction <strong>requests</strong>.<b><font color="blue">get()</font></b>, qui nécessite un argument: l’<strong>URL</strong> (<strong>U</strong>niversal <strong>R</strong>essource <strong>L</strong>ocator) de notre requête.</p>
+<p>Lorsque vous envoyez une requête <code>GET</code> au serveur, vous recevez normalement une réponse HTTP. En Python et avec le module <strong>requests</strong>, cette réponse http est représentée sous forme d’un objet <code>requests.models.Response</code> comme vous pouvez le voir ci-dessous :</p>
+<pre class="python"><code>import requests
+# Nous envoyons une requête `GET` à l&#39;URL &#39;http://api.worldbank.org/v2/country/br&#39;
+reponse = requests.get(&quot;http://api.worldbank.org/v2/country/br&quot;)
+print(&quot;La reponse de la requête GET est un objet: {}&quot;.format(type(reponse)))</code></pre>
+<pre><code>## La reponse de la requête GET est un objet: &lt;class &#39;requests.models.Response&#39;&gt;</code></pre>
+<p></br></p>
+<p>Ce type d’objet possède un attribut <strong>status_code</strong>; c’est le <strong>code d’état</strong> de votre requête et il vous permet de vérifier si la requête a réussi ou pas.</p>
+<pre class="python"><code>code_etat = reponse.status_code
+print(&quot;code  d&#39;état : {}&quot;.format(code_etat))</code></pre>
+<pre><code>## code  d&#39;état : 200</code></pre>
+<p>Le protocole HTTP stipule différents types de <strong>code d’état</strong> dont les plus importants sont :</p>
+<blockquote>
+<ul>
+<li><strong>200</strong> : succès de la requête ;<br />
+</li>
+<li><strong>301</strong> et <strong>302</strong> : redirection, respectivement permanente et temporaire ;</li>
+<li><strong>401</strong> : utilisateur non authentifié ;</li>
+<li><strong>403</strong> : accès refusé ;</li>
+<li><strong>404</strong> : page non trouvée (vous le reconnaîtrez sûrement);</li>
+<li><strong>500</strong> et <strong>503</strong> : erreur serveur ;</li>
+<li><strong>504</strong> : le serveur n’a pas répondu.</li>
+</ul>
+</blockquote>
+<p><a href="https://fr.wikipedia.org/wiki/Liste_des_codes_HTTP">Visiter ce lien pour une liste plus complète</a>.</p>
+<br><br>
+<div class="alert alert-warning">
+<pre><code>Question : Alors, l&#39;URL précédemment requêtée existe-t-elle ou pas ?</code></pre>
+</div>
+<p><br><br></p>
+</div>
+<div id="récupérer-le-contenu-de-la-réponse-du-serveur" class="section level1">
+<h1>Récupérer le contenu de la réponse du serveur</h1>
+<p>Même si le code d’état est un moyen simple pour s’enquérir de l’état de votre requête, il ne vous fournit pas l’information concrète. Le but premier quand on on communique avec le serveur, c’est de pouvoir récupérer nos données pour d’autres usages plus ou moins complexes. Où sont alors les données dans notre cas ?</p>
+<p>Tout d’abord, rappelons que notre requête ci-dessus s’adresse aux serveurs de la banque mondiale. Cette dernière a mis a disposition des acteurs économiques une API permettant d’extraire de leurs différentes bases des informations variées. Typiquement, le <strong>point de terminaison</strong> (<strong>endpoint</strong> en anglais) <a href="http://api.worldbank.org/v2/country/br" class="uri">http://api.worldbank.org/v2/country/br</a> est une sorte d’interface où l’on peut demander à la banque mondiale de nous fournir des informations spécifiques sur un pays. Dans l’URL précédent, le pays d’intérêt est le Brésil qui est symbolisé par le <strong>br</strong> à la toute fin. En changeant ce paramètre <strong>br</strong>, qui est le code <a href="https://fr.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166</a> du Brésil, nous pouvons avoir des informations sur n’importe quel pays. Remplacez par exemple le <strong>br</strong> par <strong>ci</strong> et vous aurez des informations à propos de la Côte d’Ivoire.</p>
+<p>Informations, informations ! Mais où sont-elles, vous vous dites sûrement. Patience ! En effet l’objet <strong>Response</strong> retourné par le serveur contient tout ce dont nous avons besoin. Il possède notamment un champ <strong>text</strong> qui stocke la réponse brute du serveur.</p>
+<pre class="python"><code>contenu = reponse.text
+print(contenu)</code></pre>
+<pre><code>## ﻿&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+## &lt;wb:countries page=&quot;1&quot; pages=&quot;1&quot; per_page=&quot;50&quot; total=&quot;1&quot; xmlns:wb=&quot;http://www.worldbank.org&quot;&gt;
+##   &lt;wb:country id=&quot;BRA&quot;&gt;
+##     &lt;wb:iso2Code&gt;BR&lt;/wb:iso2Code&gt;
+##     &lt;wb:name&gt;Brazil&lt;/wb:name&gt;
+##     &lt;wb:region id=&quot;LCN&quot; iso2code=&quot;ZJ&quot;&gt;Latin America &amp;amp; Caribbean &lt;/wb:region&gt;
+##     &lt;wb:adminregion id=&quot;LAC&quot; iso2code=&quot;XJ&quot;&gt;Latin America &amp;amp; Caribbean (excluding high income)&lt;/wb:adminregion&gt;
+##     &lt;wb:incomeLevel id=&quot;UMC&quot; iso2code=&quot;XT&quot;&gt;Upper middle income&lt;/wb:incomeLevel&gt;
+##     &lt;wb:lendingType id=&quot;IBD&quot; iso2code=&quot;XF&quot;&gt;IBRD&lt;/wb:lendingType&gt;
+##     &lt;wb:capitalCity&gt;Brasilia&lt;/wb:capitalCity&gt;
+##     &lt;wb:longitude&gt;-47.9292&lt;/wb:longitude&gt;
+##     &lt;wb:latitude&gt;-15.7801&lt;/wb:latitude&gt;
+##   &lt;/wb:country&gt;
+## &lt;/wb:countries&gt;</code></pre>
+<p>La banque mondiale nous renvoie donc neuf informations clés sur le pays demandé :</p>
+<ul>
+<li>Code alpha-3 ISO 3166-1 à 3 lettres</li>
+<li>Code alpha-2 ISO 3166-1 à 2 lettres</li>
+<li>Nom du pays</li>
+<li>Région: ID, nom et code à deux lettres de la Banque mondiale</li>
+<li>Niveau de revenu: ID, nom et code à deux lettres de la Banque mondiale</li>
+<li>Type de prêt: ID, nom et code à deux lettres de la Banque mondiale</li>
+<li>Capitale du pays</li>
+<li>Longitude de la capitale</li>
+<li>Latitude de la capitale <br><br></li>
+</ul>
+</div>
+<div id="requête-paramétrée" class="section level1">
+<h1>Requête paramétrée</h1>
+<p>Mais tout n’est pas encore gagné, les données telles que présentées sont sous un format non structuré et se prêtent difficilement à des analyses statistiques. Nous aurions aimé que la banque mondiale nous renvoie des données sous forme de table excel comme nous en avons bien l’habitude en statistique. Pour réaliser cet objectif, nous avons deux possibilités:</p>
+<ul>
+<li><strong>Faire la mise en forme des données par nous même</strong>. Le format actuel des données s’appelle <strong>format xml</strong> et il y a des librairies <strong>python</strong> qui permettent de le “parser”. Nous reviendrons sur ce point un peu plus tard dans le cours mais pour le moment, nous n’avons encore rien vu dans ce cours qui nous permettrait de faire cette tâche quelque peu incongrue.</li>
+<li><strong>Trouver un moyen de dire à la banque mondiale que nous préférons des données tabulaires</strong>: les requêtes HTTP possèdent toutes des paramètres que l’on peut modifier pour affiner les résultats renvoyés par le serveur. Dans le cas de l’API de la banque mondiale, le paramètre <strong>format</strong> permet de spécifier le format de la réponse renvoyé par le serveur. Comment ça s’utilise alors ?</li>
+</ul>
+<pre class="python"><code>reponse = requests.get(&quot;http://api.worldbank.org/v2/country/br?format=json&quot;)
+contenu = reponse.text
+print(contenu)</code></pre>
+<pre><code>## [{&quot;page&quot;:1,&quot;pages&quot;:1,&quot;per_page&quot;:&quot;50&quot;,&quot;total&quot;:1},[{&quot;id&quot;:&quot;BRA&quot;,&quot;iso2Code&quot;:&quot;BR&quot;,&quot;name&quot;:&quot;Brazil&quot;,&quot;region&quot;:{&quot;id&quot;:&quot;LCN&quot;,&quot;iso2code&quot;:&quot;ZJ&quot;,&quot;value&quot;:&quot;Latin America &amp; Caribbean &quot;},&quot;adminregion&quot;:{&quot;id&quot;:&quot;LAC&quot;,&quot;iso2code&quot;:&quot;XJ&quot;,&quot;value&quot;:&quot;Latin America &amp; Caribbean (excluding high income)&quot;},&quot;incomeLevel&quot;:{&quot;id&quot;:&quot;UMC&quot;,&quot;iso2code&quot;:&quot;XT&quot;,&quot;value&quot;:&quot;Upper middle income&quot;},&quot;lendingType&quot;:{&quot;id&quot;:&quot;IBD&quot;,&quot;iso2code&quot;:&quot;XF&quot;,&quot;value&quot;:&quot;IBRD&quot;},&quot;capitalCity&quot;:&quot;Brasilia&quot;,&quot;longitude&quot;:&quot;-47.9292&quot;,&quot;latitude&quot;:&quot;-15.7801&quot;}]]</code></pre>
+<p>Vous avez vu le changement opéré au niveau de l’URL ? C’est exactement de cette manière que l’on spécifie les paramètres dans une requête HTTP. Ce n’est pas une spécificité de l’API de la banque mondiale mais de toutes les requêtes HTTP. Vous auriez sûrement remarqué le paramètre <em>?q</em> utilisé par <a href="https://www.google.com/">google</a> pour envoyer les recherches à ses serveurs ! <br><br><br></p>
+</div>
+<div id="le-format-json" class="section level1">
+<h1>Le format JSON</h1>
+<p>Le nouveau format est nettement plus lisible même s’il n’est toujours pas assez tabulaire: c’est du <strong>json</strong>. Le format <a href="https://www.w3schools.com/js/js_json_objects.asp">json</a> s’apparente aux dictionnaires python et se présente ici comme un mélange entre des listes, de chaînes de caractères et de valeurs numériques. Pour gérer ce type de format, il existe un module <strong>python</strong> repondant exactement au même nom, c’est-à-dire que le nom du module est <strong>json</strong>.</p>
+<pre class="python"><code>import json
+reponse_json = json.loads(contenu)
+print(reponse_json)</code></pre>
+<pre><code>## [{&#39;page&#39;: 1, &#39;pages&#39;: 1, &#39;per_page&#39;: &#39;50&#39;, &#39;total&#39;: 1}, [{&#39;id&#39;: &#39;BRA&#39;, &#39;iso2Code&#39;: &#39;BR&#39;, &#39;name&#39;: &#39;Brazil&#39;, &#39;region&#39;: {&#39;id&#39;: &#39;LCN&#39;, &#39;iso2code&#39;: &#39;ZJ&#39;, &#39;value&#39;: &#39;Latin America &amp; Caribbean &#39;}, &#39;adminregion&#39;: {&#39;id&#39;: &#39;LAC&#39;, &#39;iso2code&#39;: &#39;XJ&#39;, &#39;value&#39;: &#39;Latin America &amp; Caribbean (excluding high income)&#39;}, &#39;incomeLevel&#39;: {&#39;id&#39;: &#39;UMC&#39;, &#39;iso2code&#39;: &#39;XT&#39;, &#39;value&#39;: &#39;Upper middle income&#39;}, &#39;lendingType&#39;: {&#39;id&#39;: &#39;IBD&#39;, &#39;iso2code&#39;: &#39;XF&#39;, &#39;value&#39;: &#39;IBRD&#39;}, &#39;capitalCity&#39;: &#39;Brasilia&#39;, &#39;longitude&#39;: &#39;-47.9292&#39;, &#39;latitude&#39;: &#39;-15.7801&#39;}]]</code></pre>
+<p>La fonction <strong>json.loads</strong> prend en entrée un texte (chaîne de caractères) au format json et renvoie un objet python qui vous permet d’accéder aux différents champs contenus dans le json initial. Ainsi, pour afficher quelques enregistrements parmi les résultats renvoyés par le serveur on procède comme suit:</p>
+<pre class="python"><code>import json
+reponse_json = json.loads(contenu)
+print(&quot;Premier enregistrement: {}&quot;.format(reponse_json[0]))</code></pre>
+<pre><code>## Premier enregistrement: {&#39;page&#39;: 1, &#39;pages&#39;: 1, &#39;per_page&#39;: &#39;50&#39;, &#39;total&#39;: 1}</code></pre>
+<pre class="python"><code>print(&quot;Dernier enregistrement: {}&quot;.format(reponse_json[-1]))</code></pre>
+<pre><code>## Dernier enregistrement: [{&#39;id&#39;: &#39;BRA&#39;, &#39;iso2Code&#39;: &#39;BR&#39;, &#39;name&#39;: &#39;Brazil&#39;, &#39;region&#39;: {&#39;id&#39;: &#39;LCN&#39;, &#39;iso2code&#39;: &#39;ZJ&#39;, &#39;value&#39;: &#39;Latin America &amp; Caribbean &#39;}, &#39;adminregion&#39;: {&#39;id&#39;: &#39;LAC&#39;, &#39;iso2code&#39;: &#39;XJ&#39;, &#39;value&#39;: &#39;Latin America &amp; Caribbean (excluding high income)&#39;}, &#39;incomeLevel&#39;: {&#39;id&#39;: &#39;UMC&#39;, &#39;iso2code&#39;: &#39;XT&#39;, &#39;value&#39;: &#39;Upper middle income&#39;}, &#39;lendingType&#39;: {&#39;id&#39;: &#39;IBD&#39;, &#39;iso2code&#39;: &#39;XF&#39;, &#39;value&#39;: &#39;IBRD&#39;}, &#39;capitalCity&#39;: &#39;Brasilia&#39;, &#39;longitude&#39;: &#39;-47.9292&#39;, &#39;latitude&#39;: &#39;-15.7801&#39;}]</code></pre>
+<p>Si vous essayez d’indexer comme ci-dessus le contenu renvoyé par le serveur sans appeler <strong>json.loads</strong> au préalable, vous n’obtiendrez que des lettres de l’alphabet qui le composent.</p>
+<p><strong>NOTE</strong>: L’objet <strong>Response</strong> dispose en soi une fonction <strong>json</strong> qui vous formate la reponse du serveur au format json sans que vous n’ayez besoin de le faire par vous même. Vous vous doutez bien que sous le capot, cette fonction utilise la librairie <em>json</em> que nous venons de voir.</p>
+<pre class="python"><code>reponse = requests.get(&quot;http://api.worldbank.org/v2/country/br?format=json&quot;)
+contenu = reponse.json()
+print(&quot;Premier enregistrement: {}&quot;.format(contenu[0]))</code></pre>
+<pre><code>## Premier enregistrement: {&#39;page&#39;: 1, &#39;pages&#39;: 1, &#39;per_page&#39;: &#39;50&#39;, &#39;total&#39;: 1}</code></pre>
+<pre class="python"><code>print(&quot;Dernier enregistrement: {}&quot;.format(contenu[-1]))</code></pre>
+<pre><code>## Dernier enregistrement: [{&#39;id&#39;: &#39;BRA&#39;, &#39;iso2Code&#39;: &#39;BR&#39;, &#39;name&#39;: &#39;Brazil&#39;, &#39;region&#39;: {&#39;id&#39;: &#39;LCN&#39;, &#39;iso2code&#39;: &#39;ZJ&#39;, &#39;value&#39;: &#39;Latin America &amp; Caribbean &#39;}, &#39;adminregion&#39;: {&#39;id&#39;: &#39;LAC&#39;, &#39;iso2code&#39;: &#39;XJ&#39;, &#39;value&#39;: &#39;Latin America &amp; Caribbean (excluding high income)&#39;}, &#39;incomeLevel&#39;: {&#39;id&#39;: &#39;UMC&#39;, &#39;iso2code&#39;: &#39;XT&#39;, &#39;value&#39;: &#39;Upper middle income&#39;}, &#39;lendingType&#39;: {&#39;id&#39;: &#39;IBD&#39;, &#39;iso2code&#39;: &#39;XF&#39;, &#39;value&#39;: &#39;IBRD&#39;}, &#39;capitalCity&#39;: &#39;Brasilia&#39;, &#39;longitude&#39;: &#39;-47.9292&#39;, &#39;latitude&#39;: &#39;-15.7801&#39;}]</code></pre>
+<p><br><br></p>
+</div>
+<div id="résumé" class="section level1">
+<h1>Résumé</h1>
+<p>En définitive, nous avons appris dans ce tutoriel introductif à :</p>
+<ul>
+<li>Définir une <strong>API</strong></li>
+<li>Envoyer une requête <strong>GET</strong> en python</li>
+<li>Vérifier le <strong>code d’état</strong> d’une requête</li>
+<li>Récupérer le contenu de la réponse renvoyée par le serveur</li>
+<li>Spécifier les paramètres dans une requête HTTP</li>
+<li>Gérer les chaînes de caractères au format <strong>json</strong></li>
+</ul>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

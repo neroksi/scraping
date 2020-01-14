@@ -1,0 +1,18 @@
+---
+title: "Application 2"
+author: "Kossi"
+date: "14/01/2020"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Application 2
+
+Reprendre l'application 1 en **R** .
+<br>

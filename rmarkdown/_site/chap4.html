@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Kossi" />
+
+
+<title>Scraping avec R</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Scraping</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="chap1.html">Chap1</a>
+</li>
+<li>
+  <a href="chap2.html">Chap2</a>
+</li>
+<li>
+  <a href="chap3.html">Chap3</a>
+</li>
+<li>
+  <a href="app1.html">app1</a>
+</li>
+<li>
+  <a href="chap4.html">chap4</a>
+</li>
+<li>
+  <a href="app2.html">app2</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Scraping avec R</h1>
+<h4 class="author">Kossi</h4>
+<h4 class="date">14/01/2020</h4>
+
+</div>
+
+
+<p><br></p>
+<div id="la-librairie-rvest" class="section level1">
+<h1>La librairie <a href="https://www.rdocumentation.org/packages/rvest/versions/0.3.5">rvest</a></h1>
+<p>Le paquet rvest permet d’extraire du contenu des pages web à l’aide de la <strong>syntaxe XPath</strong> ou des <strong>sélecteurs CSS</strong>. On utilisera beaucoup les sélecteurs CSS; les xptah n’étant utilisés qu’en cas de besoin. N’hésutez pas d’exécuter le script suivant qui va installer <strong>rvest</strong> si ce n’est pas encore le cas pour vous.</p>
+<pre class="r"><code>if (! (&quot;rvest&quot; %in% rownames(installed.packages())) )
+{install.packages(&quot;rvest&quot;, dep=TRUE)}
+if (! (&quot;httr&quot; %in% rownames(installed.packages())) )
+{install.packages(&quot;httr&quot;, dep=TRUE)}
+
+ require(&quot;rvest&quot;)</code></pre>
+<pre><code>## Loading required package: rvest</code></pre>
+<pre><code>## Warning: package &#39;rvest&#39; was built under R version 3.6.2</code></pre>
+<pre><code>## Loading required package: xml2</code></pre>
+<pre><code>## Warning: package &#39;xml2&#39; was built under R version 3.6.2</code></pre>
+<pre class="r"><code> require(&quot;httr&quot;)</code></pre>
+<pre><code>## Loading required package: httr</code></pre>
+<pre><code>## Warning: package &#39;httr&#39; was built under R version 3.6.2</code></pre>
+</div>
+<div id="linterface-rvest" class="section level1">
+<h1>L’interface <strong>rvest</strong></h1>
+<p><strong>rvest</strong> est un paquet assez simple d’usage. Le nombre de focntions mises à dispositon de l’utilisateur est reduit mais permet de presque tout faire : extraire les bouts de code <strong>HTML</strong> par tag, par sélecteur CSS, par xpath… <strong>rvest</strong> dispose aussi de quelques fonctions supplémentaires qui permettent de naviguer dans les pages en émulant un navigateur web. Ci-dessous, une liste non complète de fonctions d’extraction qui seront approfondies dans cette partie :</p>
+<ul>
+<li>html()</li>
+<li>html_nodes()</li>
+<li>html_text(), html_attrs(), html_tag()</li>
+<li>html_table</li>
+</ul>
+<div id="fonction-html" class="section level2">
+<h2>Fonction html()</h2>
+<p>La fonction html() est généralement la première à être utilisée dans un flux d’extraction car elle permet d’importer en R le contenu d’une page web. La fonction accepte donc deux paramètres, dont le deuxième (encoding) est optionnel. Elle est l’équivalent de <code>requests.get</code> en <strong>python</strong>.</p>
+<pre class="r"><code>msn = html(&quot;https://www.msn.com/en-us/money/markets/currencies&quot;)</code></pre>
+<pre><code>## Warning: &#39;html&#39; is deprecated.
+## Use &#39;xml2::read_html&#39; instead.
+## See help(&quot;Deprecated&quot;)</code></pre>
+<pre class="r"><code>print(msn)</code></pre>
+<pre><code>## {html_document}
+## &lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xml:lang=&quot;en-US&quot; dir=&quot;ltr&quot;&gt;
+## [1] &lt;head&gt;\n&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot;&gt;\n&lt;!-- data-info:v:20200103_20520765;a:5070678a-50bb-40bd-8da2-b63ff150fbd7;cn:49;az:{di ...
+## [2] &lt;body class=&quot;currenciespage green&quot;&gt;\n \n\n\n&lt;div class=&quot;head&quot;&gt;\n&lt;div&gt;\n&lt;div id=&quot;topnav&quot;&gt;\n &lt;ul class=&quot;verticalsnav&quot;&gt;\n&lt;li&gt;\n&lt;a href=&quot;/en-us&quot;&gt;Home&lt;/a&gt;\n&lt;/li&gt;\n &lt;li&gt; ...</code></pre>
+<p>Normalement vous devriez recevoir un message vous informant que la fonction <strong>html</strong> est obsolète. Cette fonction a été rendue obsolète afin de promouvoir une meilleure façon de récupérationn de pages <strong>HTMLL</strong>. En effet, la fonction <strong>html</strong> ne renvoie que le contenu de la page et rien sur le statut et les autres composants de la requête <strong>HTTP</strong>. Avec le paquet <strong>httr</strong>, on lirait récupérerait une page web de la façon suivante:</p>
+<pre class="r"><code>msn = GET(&quot;https://www.msn.com/en-us/money/markets/currencies&quot; )
+print(paste( &quot;code d&#39;état :&quot;,  msn$status_code))</code></pre>
+<pre><code>## [1] &quot;code d&#39;état : 200&quot;</code></pre>
+<pre class="r"><code>print(msn)</code></pre>
+<pre><code>## Response [https://www.msn.com/en-us/money/markets/currencies]
+##   Date: 2020-01-14 07:24
+##   Status: 200
+##   Content-Type: text/html; charset=utf-8
+##   Size: 113 kB
+## &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+## &lt;!DOCTYPE HTML PUBLIC &quot;-//WAPFORUM//DTD XHTML Mobile 1.2//EN&quot; &quot;http://www.openmobilealliance.org/tech/DTD/xhtml-mobile12.dtd&quot;&gt;
+## &lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xml:lang=&quot;en-US&quot; dir=&quot;ltr&quot;&gt;
+## 
+## &lt;head&gt;
+##  &lt;!-- data-info:v:20200103_20520765;a:965b8025-7da5-428a-bdb2-b45ca4418a27;cn:41;az:{did:8df28e8681774be6b41666cd5d52d6db, rid: 41, sn: neurope-prod-entertainment, dt:...
+##  &lt;meta name=&quot;robots&quot; content=&quot;index, follow&quot;/&gt;
+##  
+##  
+## 
+## ...</code></pre>
+<p><br></p>
+</div>
+<div id="fonction-html_nodes" class="section level2">
+<h2>Fonction html_nodes()</h2>
+<p>La fonction <strong>html_nodes()</strong> est celle qui permet de faire l’essentiel du boulot du scrapeur, car elle permet d’extraire des morceaux de code HTML contenant les informations d’intérêt à partir de la page iweb. Pour extraire les données, html_nodes() met à disposition deux moyens : les sélecteurs <strong>xpaths</strong> et <strong>css</strong>. La fonction html_nodes() accepte deux arguments, qui sont tous deux obligatoires. Le format d’appel est donc <strong>html_nodes(page, [css, xpath])</strong> L’argument <code>page</code> représente le code HTML de la page et le deuxième argument est un critère de sélection.</p>
+<pre class="r"><code>page =  content(msn)
+# Extraire les paragraphes de la page
+html_nodes(page, &quot;p&quot;)</code></pre>
+<pre><code>## {xml_nodeset (121)}
+##  [1] &lt;p class=&quot;truncated-string&quot; title=&quot;Open&quot;&gt;Open&lt;/p&gt;
+##  [2] &lt;p class=&quot;truncated-string&quot; title=&quot;0.8976&quot;&gt;0.8976&lt;/p&gt;
+##  [3] &lt;p class=&quot;truncated-string&quot; title=&quot;Change&quot;&gt;Change&lt;/p&gt;
+##  [4] &lt;p class=&quot;truncated-string&quot; title=&quot;-0.0003&quot;&gt;-0.0003&lt;/p&gt;
+##  [5] &lt;p class=&quot;truncated-string&quot; title=&quot;Change%&quot;&gt;Change%&lt;/p&gt;
+##  [6] &lt;p class=&quot;truncated-string&quot; title=&quot;-0.0334%&quot;&gt;-0.0334%&lt;/p&gt;
+##  [7] &lt;p class=&quot;truncated-string&quot; title=&quot;52 Week High&quot;&gt;52 Week High&lt;/p&gt;
+##  [8] &lt;p class=&quot;truncated-string&quot; title=&quot;0.9191&quot;&gt;0.9191&lt;/p&gt;
+##  [9] &lt;p class=&quot;truncated-string&quot; title=&quot;52 Week Low&quot;&gt;52 Week Low&lt;/p&gt;
+## [10] &lt;p class=&quot;truncated-string&quot; title=&quot;0.8642&quot;&gt;0.8642&lt;/p&gt;
+## [11] &lt;p class=&quot;truncated-string&quot; title=&quot;Major Currencies&quot;&gt;Major Currencies&lt;/p&gt;
+## [12] &lt;p class=&quot;truncated-string&quot; title=&quot;Price&quot;&gt;Price&lt;/p&gt;
+## [13] &lt;p class=&quot;truncated-string&quot; title=&quot;Change&quot;&gt;Change&lt;/p&gt;
+## [14] &lt;p class=&quot;truncated-string&quot; title=&quot;Change%&quot;&gt;Change%&lt;/p&gt;
+## [15] &lt;p class=&quot;truncated-string&quot; title=&quot;52 Week High&quot;&gt;52 Week High&lt;/p&gt;
+## [16] &lt;p class=&quot;truncated-string&quot; title=&quot;52 Week Low&quot;&gt;52 Week Low&lt;/p&gt;
+## [17] &lt;p class=&quot;truncated-string&quot; title=&quot;Euro&quot;&gt;Euro&lt;/p&gt;
+## [18] &lt;p class=&quot;truncated-string&quot; title=&quot;USD/EUR&quot;&gt;USD/EUR&lt;/p&gt;
+## [19] &lt;p class=&quot;truncated-string&quot; title=&quot;0.8975&quot; aria-label=&quot;Price 0.8975&quot;&gt;0.8975&lt;/p&gt;
+## [20] &lt;p class=&quot;truncated-string&quot; title=&quot;-0.0004&quot; aria-label=&quot;Change -0.0004&quot;&gt;-0.0004&lt;/p&gt;
+## ...</code></pre>
+<p>On voit bien que l’équivalent <strong>python</strong> de <strong>html_nodes()</strong> est soit <strong>bs.find_all()</strong> ou <strong>bs.select</strong>. Il existe aussi un équivalent de <strong>bs.find</strong> ou <strong>bs.select_one</strong> en <strong>R</strong> : c’est <strong>html_node</strong> . <br></p>
+</div>
+<div id="fonctions-html_text-html_attrs-et-html_name" class="section level2">
+<h2>Fonctions html_text(), html_attrs(), et html_name()</h2>
+<p>Ces fonctions permettent d’avoir accès aux différents composants d’un noeud <strong>html</strong> extrait à partir des fonctions <strong>html_node</strong> ou <strong>html_nodes</strong>.</p>
+<ul>
+<li><strong>html_text(x, …)</strong> : extraire le texte de l’élément (passer l’argument trim = TRUE pour supprimer les espaces de début et de fin)</li>
+<li><strong>html_attr(x), html_attrs(x)</strong> : extraire les attributs du noeud x</li>
+<li><strong>html_name(x)</strong> : obtenir le nom de l’élément</li>
+</ul>
+<pre class="r"><code>currency_class &lt;- &quot;.mjrcurrncsitem&quot;
+cur = html_node(page, currency_class)
+
+thead_class = &#39;.mjrcurrncsrow.tblheaderrow&#39;
+header = html_node(cur,  thead_class)
+headers = html_nodes(header, &quot;.mctblheading&quot;) # Avez-vous pu retrouver la classe `mctblheading`  de vous mêmes ?
+header_values = c()
+i = 0
+for (header in headers){
+    header_values[i] = html_node(header, &quot;p&quot;)%&gt;%html_attr(&quot;title&quot;)
+    i = i + 1
+}
+print(header_values)</code></pre>
+<pre><code>## [1] &quot;Price&quot;        &quot;Change&quot;       &quot;Change%&quot;      &quot;52 Week High&quot; &quot;52 Week Low&quot;</code></pre>
+</div>
+</div>
+<div id="résumé" class="section level1">
+<h1>Résumé</h1>
+<p>Dans cette quatrième partie du cours portant sur le scraping avec <strong>R</strong>, nous avons abordé :</p>
+<ul>
+<li>la librairie <strong>rvest</strong> et ses différentes interfaces html(), html_node(), html_attr(), html_text(), html_tag()</li>
+<li>la librairie <strong>httr</strong> qui permet de recupérer de façon plus fiable une page web</li>
+<li>les différentes “relations d’équivalence” entre les interfaces <strong>R</strong> et celles de <strong>python</strong></li>
+</ul>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
